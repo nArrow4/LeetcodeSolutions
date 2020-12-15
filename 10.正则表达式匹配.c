@@ -6,39 +6,25 @@
 
 // @lc code=start
 /**方法一：直接解析正则表达式
- * 思路：还有点问题
- * 
- * 
+ * 思路：还有点问题。放弃了，分支太多，或者是我考虑的太麻烦了。
  */
-// #include<string.h>
-// bool isMatch(char * s, char * p){
-//     int sLen = strlen(s);
-//     int pLen = strlen(p);
-//     int pos = 0;
-//     for (int i = 0; i < pLen; i++){
-//         if(p[i] == '*')
-//             continue;
-//         if(i+1 < pLen && p[i+1] == '*'){
-            
-//             while(s[pos] == p[i])
-//                 pos++;
-//         }
-//         else{
-//             if(p[i] == '.'){
-//                 pos++;
-//             }
-//             else{
-//                 if(p[i] == s[pos])
-//                     pos++;
-//                 else
-//                     return false;
-//             }
-//         }
-//     }
-//     if(pos == sLen)
-//         return true;
-//     else
-//         return false;
-// }
+
+/**方法二：dp
+ * 思路：考虑每次匹配s的第一个字符，
+ *              1.如果下一位是*，则
+ *                  1）继续用p[i]匹配
+ *                  2）用p[i+2]匹配
+ *              2.下一位不是*，就继续向后匹配
+ * T:O(m+n)
+ * S:O(1)
+ */
+bool isMatch(char * s, char * p){
+    if(!*p) return !*s;
+    bool flag = *s && ((*s == *p) || (*p == '.'));
+    if(*(p+1) == '*'){
+        return (flag && isMatch(s + 1, p)) || isMatch(s, p + 2);
+    }
+    return flag && isMatch(s + 1, p + 1);
+}
 // @lc code=end
 
