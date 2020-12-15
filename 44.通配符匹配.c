@@ -74,10 +74,24 @@
 
 // @lc code=start
 
-
+/**方法一：递归
+ * 思路：
+ * 
+ * T:TLE
+ *
 bool isMatch(char * s, char * p){
-
-}
+    if(!*p)
+        return !*s;
+    if(!*s){
+        while(*p == '*')
+            p++;
+        return !*p;
+    }
+    bool first = *s && (*p == *s || *p == '?');
+    if(*p == '*')
+        return isMatch(s + 1, p) || isMatch(s, p + 1);
+    return first && isMatch(s + 1, p + 1);
+}*/
 
 
 // @lc code=end
