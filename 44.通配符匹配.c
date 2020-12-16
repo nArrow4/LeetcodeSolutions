@@ -74,9 +74,8 @@
 
 // @lc code=start
 
-/**方法一：递归
+/**方法一：递归（暴力）
  * 思路：
- * 
  * T:TLE
  *
 bool isMatch(char * s, char * p){
@@ -92,7 +91,41 @@ bool isMatch(char * s, char * p){
         return isMatch(s + 1, p) || isMatch(s, p + 1);
     return first && isMatch(s + 1, p + 1);
 }*/
-
-
+/**方法二：动态规划
+ * 思路：dp[i][j]表示s[0 - i-1]与p[0 - j-1]能否匹配，根据p[j-1]分类讨论，
+ *          1. p[j-1] == 'a'-'z'，只需判断p[j-1] == s[i-1]
+ *          2. p[j-1] == '?'，直接匹配一位
+ *          3. p[j-1] == '*',这个匹配是没有确定结果的，每次分匹配0个和匹配多个来讨论
+ * T:O(n*m)
+ * S:O(m*n)
+ */
+#include<string.h>
+bool isMatch(char * s, char * p){
+    int m = strlen(s);
+    int n = strlen(p);
+    int dp[m + 1][n + 1];               //dp[i][j] 表示s[1-i]与p[1-j]匹配
+    memset(dp, 0, sizeof(int) * ((m+1) * (n+1)));
+    dp[0][0] = true;
+    for (int j = 1; j <= n; j++){
+        if(p[j - 1]=='*')
+            dp[0][j] = true;
+        else
+            break;
+    }
+    for (int i = 1; i <= m; i++){       // i for s
+        for (int j = 1; j <= n; j++){   // j for p
+            if(p[j - 1] == '?'){
+                dp[i][j] = dp[i - 1][j - 1];
+            }
+            else if(p[j - 1] == '*'){
+                dp[i][j] = (dp[i - 1][j] || dp[i][j - 1]);
+            }
+            else{
+                dp[i][j] = (s[i - 1] == p[j - 1]) && dp[i - 1][j - 1];
+            }
+        }
+    }
+    return dp[m][n];
+}
 // @lc code=end
 
