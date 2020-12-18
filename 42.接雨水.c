@@ -6,48 +6,6 @@
 
 // @lc code=start
 /*
-思路：
-注意：
-1.
-几个卡点
-[5,4,1,2]：两个峰顶的最小值比中间的值小，需要判断一下，否则会加上负值
-[5,2,1,2,1,5]：找到的峰顶是“假峰顶”
-边缘元素为峰顶
-*/
-// 自己写的，没过
-// #define min(x, y) (x<y?x:y)
-// int trap(int* height, int heightSize){
-//     int *stack, cnt = 0, left = 0, right = 0, top;
-//     stack = (int *)malloc(sizeof(int) * heightSize);
-//     if(heightSize == 0 || heightSize == 1 || heightSize == 2){
-//         return 0;
-//     }
-//     for (int i = 1; i < heightSize - 1; i++){
-//         if(height[i] > height[i-1] && height[i] > height[i+1]){
-//             //找到峰顶
-//             right = i;
-//             top = min(height[left], height[right]);
-//             if(top != 0){
-//                 for (int j = left + 1; j < right; j++){
-//                     cnt += (top - height[j])>0?(top - height[j]):0;
-//                 }
-//             }
-//             left = right;
-//         }
-//     }
-//     if(height[heightSize-1]>height[heightSize-2]){
-//         right = heightSize - 1;
-//         top = min(height[left], height[right]);
-//         if(top != 0){
-//             for (int j = left + 1; j < right; j++){
-//                 cnt += (top - height[j])>0?(top - height[j]):0;
-//             }
-//         }
-//     }
-//     return cnt;
-// }
-
-/*
 思路：先找最高峰，然后分别遍历左侧和右侧。每次记住当前最高峰。
         如果height小于当前最高峰，就可以接住雨水。
 */
@@ -138,6 +96,30 @@ int trap(int* height, int heightSize){
 
     free(stack);
     return water;
+}
+
+/**方法三：
+ * 
+ * 
+ * 
+ */
+int trap(int* height, int heightSize){
+    if(heightSize < 3)
+        return 0;
+    int peak[heightSize], pos = -1, water = 0;
+    if(height[0] > height[1])
+        peak[++pos] = 0;
+    for (int i = 1; i < heightSize - 1; i++){
+        if(height[i] >= height[i-1] && height[i] >= height[i+1]){
+            peak[++pos] = i;
+        }
+    }
+    if(height[heightSize - 1] >= height[heightSize - 2])
+        peak[++pos] = heightSize - 1;
+    for (int i = 0; i <= pos; i++){
+
+    }
+    return water;  
 }
 // @lc code=end
 
