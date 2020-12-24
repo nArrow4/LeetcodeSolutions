@@ -24,7 +24,7 @@ int lengthOfLongestSubstring(char * s){
             right++;
         }
         ans = fmax(ans, right - left + 1);
-        printf("%d %d\n", left, right);
+        // printf("%d %d\n", left, right);
         hash[s[left]] = 0;
         left++;
         right = right > left ? right : left;
