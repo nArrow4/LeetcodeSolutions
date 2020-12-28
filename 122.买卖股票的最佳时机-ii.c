@@ -62,12 +62,12 @@ int maxProfit(int* prices, int pricesSize) {
  * T:O(n)
  * S:O(1)
  */
-int maxProfit(int* prices, int pricesSize) {
-    int ans = 0;
-    for (int i = 1; i < pricesSize; i++){
-        ans += fmax(0, prices[i] - prices[i - 1]);
-    }
-    return ans;
-}
+// int maxProfit(int* prices, int pricesSize) {
+//     int ans = 0;
+//     for (int i = 1; i < pricesSize; i++){
+//         ans += fmax(0, prices[i] - prices[i - 1]);
+//     }
+//     return ans;
+// }
 // @lc code=end
 
