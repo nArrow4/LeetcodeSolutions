@@ -37,9 +37,28 @@
 
 // @lc code=start
 
-
+/**方法一：贪心（两种写法）
+ * 思路：每次记录最远能达到的位置
+ * T:O(n)
+ * S:O(1)
+ */
+// bool canJump(int* nums, int numsSize){
+//     int max = 0;
+//     for (int i = 0; i < numsSize; i++){
+//         if(nums[i] == 0 && max == i && i != numsSize - 1)
+//             return false;
+//         max = fmax(max, i + nums[i]);
+//     }
+//     return max >= numsSize - 1;
+// }
 bool canJump(int* nums, int numsSize){
-
+    int max = 0;
+    for (int i = 0; i <= max; i++){
+        if(max >= numsSize - 1)
+            return true;
+        max = fmax(max, i + nums[i]);
+    }
+    return false;
 }
 
 
