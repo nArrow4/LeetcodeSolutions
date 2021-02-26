@@ -9,30 +9,33 @@ class Solution {
 public:
     int longestSubstring(string s, int k) {
         int n = s.length();
-        std::unordered_map<char, int> umap;
-        int left = 0;
-        int right = 0;
         int res = 0;
-        while(right < n){
-            if(!umap.count(s[right])){
-                umap[s[right]] = 1;
+        for (int i = 0; i <= n/k; i++){
+            // std::cout << i << std::endl;
+            int left = 0;
+            int right = 0;
+            std::unordered_map<char, int> umap;
+            while(right < n){
+                if(!umap.count(s[right])){
+                    umap[s[right]] = 1;
+                }
+                else{
+                    umap[s[right]]++;
+                }
+                // 区间内缩
+                while(umap.size() > i){
+                    umap[s[left]]--;
+                    if(umap[s[left]] == 0)
+                        umap.erase(s[left]);
+                    left++;
+                }
+                if(check(umap, k)){
+                    // std::cout << right << " " << left << std::endl;
+                    res = fmax(res, right - left + 1);
+                }
+                // 区间外扩
+                right++;
             }
-            else{
-                umap[s[right]]++;
-            }
-            // 区间内缩
-            while(umap.count(s[left]) > k){
-                umap[s[left]]--;
-                if(umap[s[left]] == 0)
-                    umap.erase(s[left]);
-                left++;
-            }
-            if(check(umap, k)){
-                // std::cout << right << " " << left << std::endl;
-                res = fmax(res, right - left + 1);
-            }
-            // 区间外扩
-            right++;
         }
         return res;
     }
