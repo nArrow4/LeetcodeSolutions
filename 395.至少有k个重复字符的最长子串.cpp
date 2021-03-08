@@ -10,7 +10,7 @@ public:
     int longestSubstring(string s, int k) {
         int n = s.length();
         int res = 0;
-        for (int i = 0; i <= n/k; i++){
+        for (int i = 0; i <= n/k; i++){     //  i是T中的字符数
             // std::cout << i << std::endl;
             int left = 0;
             int right = 0;
